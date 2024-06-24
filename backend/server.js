@@ -3,10 +3,16 @@ const { Web3 } = require('web3');const cors = require('cors');
 
 const app = express();
 const port = 5000;
-const web3 = new Web3('http://localhost:7545'); // URL du serveur Ganache
+const web3 = new Web3('http://127.0.0.1:7545'); // URL du serveur Ganache
 
 // Configuration CORS
-app.use(cors());
+app.use(cors({
+  origin: "http://127.0.0.1:7545"
+}));
+
+
+
+
 app.use(express.json());
 
 const fs = require('fs');
@@ -26,7 +32,7 @@ const contract = new web3.eth.Contract(contractABI, contractAddress);
 app.post('/createPassport', async (req, res) => {
   const { name, nationality, passportNumber, dateOfBirth, placeOfBirth, issueDate, expirationDate } = req.body;
   const accounts = await web3.eth.getAccounts();
-  const fromAddress = accounts[0];
+  const fromAddress = accounts[1];
   console.log("test")
 
   try {
